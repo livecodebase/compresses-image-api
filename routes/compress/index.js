@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const router = Router();
-const multerTempUploads = require("../../middleware/multertemp");
+const multerUploads = require("../../middleware/multer");
 
 const funcs = require("../../methods/imageresize");
 const fs = require("fs");
 
-router.post("/image", multerTempUploads, async (req, res) => {
+router.post("/image", multerUploads, async (req, res) => {
   let size = 500;
 
   let data = await funcs.universalResizer(

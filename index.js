@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
-app.use(cors());
+// app.use(cors());
 
 // Api routes
 app.use("/api/compress/", require("./routes/compress"));
