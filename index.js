@@ -4,6 +4,7 @@ const port = 4000;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+const path = require("path");
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -24,6 +25,7 @@ app.use(express.static("public"));
 app.use("/api/compress/", require("./routes/compress"));
 
 app.use("/", require("./pages"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () =>
   console.log(`Example app listening at http://localhost:${port}`)
