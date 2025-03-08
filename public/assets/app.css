@@ -11,6 +11,7 @@ body {
   background-image: url("/assets/home-bg.png");
   background-size: cover;
   background-position: top center;
+  min-height: 100vh;
 }
 
 button {
@@ -97,12 +98,14 @@ button {
   font-size: 22px;
   font-weight: 600;
   color: #0F172B;
+  margin-bottom: 0;
 }
 .dropbox-text .or {
   font-size: 14px;
   font-weight: 400;
   color: #0F172B;
   margin-bottom: 8px;
+  margin-top: 0;
 }
 .dropbox-text button {
   background: #0F172B;
