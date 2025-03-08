@@ -6,6 +6,14 @@
 body {
     font-family: "Lato", sans-serif;
     font-weight: 400;
+    background: #F9FAFC;
+    background-image: url('/assets/home-bg.png');
+    background-size: cover;
+    background-position: top center;
+}
+button {
+    outline: none;
+    border: 0;
 }
 $primary: #0F172B;
 
@@ -15,18 +23,92 @@ $primary: #0F172B;
     padding: 0 40px;
 }
 .header-wrapper {
-    padding: 10px 0;
+    padding: 16px 0;
     display: flex;
     align-items: center;
     .logo-link {
         text-decoration: none;
         display: flex;
         align-items: center;
+        img {
+            width: 48px;
+        }
         label {
             margin-left: 12px;
             color: $primary;
             font-size: 1.5rem;
             font-weight: 700;
         }
+    }
+}
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    min-height: 200px;
+
+    .hero-title {
+        width: 50%;
+        padding-right: 50px;
+    }
+    .hero-upload {
+        width: 50%;
+    }
+}
+.hero-title h1 {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 50px;
+    color: $primary;
+    span {
+        color: #2569FC;
+    }
+}
+.dropbox {
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #fff;
+}
+.dropbox-inner {
+    background: #F9FAFC;
+    border-radius: 8px;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23C9C9C9' stroke-width='2' stroke-dasharray='10' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+}
+.dropbox-icon img {
+    width: 100px;
+    height: auto;
+}
+.dropbox-text {
+    margin-top: 16px;
+    text-align: center;
+    .title {
+        font-size: 22px;
+        font-weight: 600;
+        color: $primary;
+    }
+    .or {
+        font-size: 14px;
+        font-weight: 400;
+        color: $primary;
+        margin-bottom: 8px;
+    }
+    button {
+        background: $primary;
+        border-radius: 8px;
+        height: 40px;
+        vertical-align: middle;
+        padding: 0 32px;
+        color: #fff;
+        font-weight: 400;
+        cursor: pointer;
+        font-family: "Lato", sans-serif
+    }
+    .max-info {
+        font-size: 14px;
+        margin-top: 12px;
     }
 }
