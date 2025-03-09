@@ -4,30 +4,30 @@ const multerUploads = require("../../middleware/multer");
 
 const funcs = require("../../methods/imageresize");
 const fs = require("fs");
-const { log } = require("console");
 
 router.post("/image", multerUploads, async (req, res) => {
-  
-  if (!req.file) {
-    return res.status(400).json({ error: "No file attached" });
-  }
-  const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-  if (!allowedTypes.includes(req.file.mimetype)) {
-    return res.status(400).json({ error: "Invalid file type. Only jpg, jpeg, and png are allowed." });
-  }
-  let size = 500;
+  return res.status(200).send({hi:"sdfsdf"})
 
-  let data = await funcs.universalResizer(
-    req.file.path,
-    size,
-    req.headers.host
-  );
-  console.log('data', data);
+  // if (!req.file) {
+  //   return res.status(400).json({ error: "No file attached" });
+  // }
+  // const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+  // if (!allowedTypes.includes(req.file.mimetype)) {
+  //   return res.status(400).json({ error: "Invalid file type. Only jpg, jpeg, and png are allowed." });
+  // }
+  // let size = 500;
+
+  // let data = await funcs.universalResizer(
+  //   req.file.path,
+  //   size,
+  //   req.headers.host
+  // );
+  // console.log('data', data);
   
-  fs.unlink(req.file.path, function (err) {
-    if (err) throw err;
-  });
-  res.send(data);
+  // fs.unlink(req.file.path, function (err) {
+  //   if (err) throw err;
+  // });
+  // res.send(data);
 });
 
 /* router.post("/video", multerUploads.single("file"), (req, res) => {
