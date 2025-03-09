@@ -11,6 +11,8 @@ const cron = require("node-cron");
 const funcs = {
   async universalResizer(filepath, size, host) {
     const id = nanoid();
+    console.log('id', id);
+    
     try {
       const imageBuffer = await fs.readFile(filepath);
       const format = req.query.format || "jpeg"; // Default to JPEG
