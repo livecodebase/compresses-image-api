@@ -58,7 +58,7 @@ button {
 .hero-wrapper .hero-title {
   width: 50%;
   padding-right: 50px;
-  margin-top: 50px;
+  margin-top: 64px;
 }
 .hero-wrapper .hero-upload {
   width: 50%;
@@ -69,7 +69,7 @@ button {
   font-size: 42px;
   line-height: 50px;
   color: #0F172B;
-  max-width: 410px;
+  max-width: 420px;
 }
 .hero-title h1 span {
   color: #2569FC;

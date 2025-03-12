@@ -54,7 +54,7 @@ $primary: #0F172B;
     .hero-title {
         width: 50%;
         padding-right: 50px;
-        margin-top: 50px;
+        margin-top: 64px;
     }
     .hero-upload {
         width: 50%;
@@ -65,7 +65,7 @@ $primary: #0F172B;
     font-size: 42px;
     line-height: 50px;
     color: $primary;
-    max-width: 410px;
+    max-width: 420px;
     span {
         color: #2569FC;
     }
@@ -228,4 +228,8 @@ $primary: #0F172B;
 
 .compress-resize {
     margin-top: 24px;
+}
+
+.compress-images-list {
+    
 }
