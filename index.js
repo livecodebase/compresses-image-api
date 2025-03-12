@@ -9,7 +9,7 @@ const cron = require("node-cron");
 
 // Schedule a cron job to run every hour to delete files older than 1 hour
 const directory = path.join(__dirname, "uploads");
-console.log(directory);
+console.log('directory', directory);
 
 
 cron.schedule("0 * * * *", async () => {
@@ -47,7 +47,7 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
-// app.use(cors());
+app.use(cors());
 
 // Api routes
 app.use("/api/compress/", require("./routes/compress"));

@@ -2,7 +2,6 @@ const multer = require("multer");
 const path = require("path");
 const { nanoid } = require('nanoid');
 const fs = require('fs');
-const uniqueId = nanoid();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -13,10 +12,11 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
+    const uniqueId = nanoid();
     cb(null, uniqueId + path.extname(file.originalname));
     // cb(null, uniqueId + "__" + file.originalname);
   },
 });
-const multerTempUploads = multer({ storage }).single("file");
+const multerUploads = multer({ storage }).single("file");
 
-module.exports = multerTempUploads;
+module.exports = multerUploads;
