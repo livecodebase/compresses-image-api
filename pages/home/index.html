@@ -171,8 +171,40 @@
         </div>
       </div>
     </section>
-    <section class="container">
-      <div class="compress-images-list"></div>
+    <section class="container cil-wrap">
+      <div class="compress-images-list">
+        <ul class="list-ul">
+          <li class="single-image">
+            <div class="s-front">
+              <img src="https://images.pexels.com/photos/17093024/pexels-photo-17093024/free-photo-of-decorated-bench-under-trees.jpeg?auto=compress&cs=tinysrgb&w=100&lazy=load" alt="">
+              <div class="s-front-detail">
+                <div class="title">pexels-reyyan-505450018-30871781.jpg <span class="badge">JPEG</span></div>
+                <div class="subtitle">Original: 2.5 MB  |  Compressed: <span>314 KB ( -70% )</span></div>
+              </div>
+            </div>
+            <div class="cta-btn">
+              <div class="uk-button-group">
+                <button  class="uk-button uk-button-primary download">Download</button>
+                <div class="uk-inline">
+                  <button class="uk-button uk-button-default download-options" type="button" aria-label="Toggle Dropdown"><span uk-icon="icon:  triangle-down"></span></button>
+                  <div uk-dropdown="mode: click; target: !.uk-button-group;">
+                    <ul class="uk-list">
+                      <li><button class="uk-button uk-button-default uk-button-small">Small button</button></li>
+                      <li><button class="uk-button uk-button-default uk-button-small">Small button</button></li>
+                      <li><button class="uk-button uk-button-default uk-button-small">Small button</button></li>
+                    </ul>
+                  </div>
+              </div>
+              </div>
+              <!-- <button class="uk-button uk-button-default">WebP (Smallest)</button> -->
+              <!-- <a href="" class="uk-icon-button uk-margin-small-right" uk-icon="instagram"></a> -->
+              <button class="uk-icon-button uk-button-default uk-margin-small-right">
+                <img src="/assets/compression-settings.svg" alt="" srcset="">
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
     </section>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
