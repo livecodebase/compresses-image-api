@@ -67,10 +67,11 @@
                 <p class="or">or</p>
                 <button class="btn">Select Images</button>
                 <p class="max-info">Up to 100 images, max 100 MB each.</p>
+                <p class="max-info -files">Supported files:  jpeg, png, avif, webp, heic</p>
               </div>
             </div>
           </div>
-          <!-- <div class="compression-settings">
+          <div class="compression-settings" style="display: none !important;">
             <ul uk-accordion>
               <li>
                 <a
@@ -81,7 +82,7 @@
                   aria-controls="uk-accordion-6"
                   aria-expanded="false"
                   aria-disabled="false"
-                  >Compression Settings (optional)</a
+                  >Compression Settings (optional)</a
                 >
                 <div
                   class="uk-accordion-content"
@@ -90,96 +91,102 @@
                   aria-labelledby="uk-accordion-5"
                   hidden=""
                 >
-                  <div class="compression-quantity">
-                    <div
-                      class="uk-form-controls uk-form-controls-text radio-group"
-                    >
-                      <label
-                        ><input
-                          id="QuantityRadio"
-                          class="uk-radio"
-                          type="radio"
-                          name="compression-radio"
-                          value="quality"
-                          checked
-                        />
-                        Quality</label
-                      ><br />
-                      <label
-                        ><input
-                          id="MaxFileSizeRadio"
-                          class="uk-radio"
-                          type="radio"
-                          name="compression-radio"
-                          value="maxFileSize"
-                        />
-                        Max File Size (KB)</label
+                  <!-- <div>
+                    <div class="compression-quantity">
+                      <div
+                        class="uk-form-controls uk-form-controls-text radio-group"
                       >
-                    </div>
-                    <div
-                      class="compression-quantity-slider advance-setting-wrap"
-                    >
-                      <div class="slider-wrapper">
-                        <div id="compression-quantity-slider">
-                          <div
-                            id="compression-q-label"
-                            class="ui-slider-handle"
-                          ></div>
+                        <label
+                          ><input
+                            id="QuantityRadio"
+                            class="uk-radio"
+                            type="radio"
+                            name="compression-radio"
+                            value="quality"
+                            checked
+                          />
+                          Quality</label
+                        ><br />
+                        <label
+                          ><input
+                            id="MaxFileSizeRadio"
+                            class="uk-radio"
+                            type="radio"
+                            name="compression-radio"
+                            value="maxFileSize"
+                          />
+                          Max File Size (KB)</label
+                        >
+                      </div>
+                      <div
+                        class="compression-quantity-slider advance-setting-wrap"
+                      >
+                        <div class="slider-wrapper">
+                          <div id="compression-quantity-slider">
+                            <div
+                              id="compression-q-label"
+                              class="ui-slider-handle"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="compression-maxfilesize advance-setting-wrap"
+                        style="display: none"
+                      >
+                        <div class="uk-inline">
+                          <span class="uk-form-icon uk-form-icon-flip">KB</span>
+                          <input
+                            class="uk-input"
+                            type="text"
+                            placeholder="Max file size"
+                            aria-label="Enter max file size"
+                          />
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="compression-maxfilesize advance-setting-wrap"
-                      style="display: none"
-                    >
-                      <div class="uk-inline">
-                        <span class="uk-form-icon uk-form-icon-flip">KB</span>
-                        <input
-                          class="uk-input"
-                          type="text"
-                          placeholder="Max file size"
-                          aria-label="Enter max file size"
-                        />
+  
+                    <div class="compress-resize">
+                      <div class="uk-grid-small" uk-grid>
+                        <div class="uk-width-1-2@s">
+                          <span>Width</span>
+                          <input
+                            class="uk-input"
+                            type="text"
+                            aria-label="Please enter width"
+                          />
+                        </div>
+                        <div class="uk-width-1-2@s">
+                          <span>Height</span>
+                          <input
+                            class="uk-input"
+                            type="text"
+                            aria-label="Please enter height"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="compress-resize">
-                    <div class="uk-grid-small" uk-grid>
-                      <div class="uk-width-1-2@s">
-                        <span>Width</span>
-                        <input
-                          class="uk-input"
-                          type="text"
-                          aria-label="Please enter width"
-                        />
-                      </div>
-                      <div class="uk-width-1-2@s">
-                        <span>Height</span>
-                        <input
-                          class="uk-input"
-                          type="text"
-                          aria-label="Please enter height"
-                        />
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </li>
             </ul>
-          </div> -->
+          </div>
         </div>
       </div>
     </section>
     <section class="container cil-wrap">
-      <div class="compress-images-list">
+      <div class="compress-images-list" >
         <ul class="list-ul" id="images-list">
           <li class="single-image">
             <div class="s-front">
               <img src="https://images.pexels.com/photos/17093024/pexels-photo-17093024/free-photo-of-decorated-bench-under-trees.jpeg?auto=compress&cs=tinysrgb&w=100&lazy=load" alt="">
               <div class="s-front-detail">
-                <div class="title">pexels-reyyan-505450018-30871781.jpg <span class="badge">JPEG</span></div>
-                <div class="subtitle">Original: 2.5 MB  |  Compressed: <span>314 KB ( -70% )</span></div>
+                <div class="title">pexels-reyyan-505450018-30871781.jpg</div>
+                <div class="subtitle">
+                  <span class="badge">JPEG</span>
+                  <span class="original-size">2.5 MB</span>
+                </div>
               </div>
             </div>
             <div class="cta-btn">
@@ -206,6 +213,11 @@
         </ul>
       </div>
     </section>
+
+    <div class="dragging-overlay">
+      
+    </div>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 

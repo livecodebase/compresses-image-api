@@ -30,7 +30,7 @@ $(document).ready(function () {
     }
   });
 
-  $("#dropzone")
+  $("body")
     .on("dragover", function (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -55,68 +55,43 @@ $(document).ready(function () {
   }
 
   function handleFiles(files) {
+    console.log(files);
+    
+    $('.compress-images-list').show()
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const fileData = {...file }
-      fileData.imageBlob = URL.createObjectURL(file)
-      fileData.fileType = file.type.split("/")[1].toUpperCase()
-      fileData.fileSize = formatBytes(file.size)
-      console.log(fileData);
-             
-    }
-    return
-    const validFiles = Array.from(files).filter(isValidFileType);
-    if (validFiles.length === 0) {
-      notyf.error("Only JPEG, JPG, and PNG files are allowed.");
-      return;
-    }
+      const fileData = { };
+      fileData.imageBlob = URL.createObjectURL(file);
+      fileData.fileType = file.type.split("/")[1]?.toUpperCase();
+      if (!fileData.fileType) {
+        fileData.fileType = file.name?.split('.')?.pop()?.toUpperCase();
+      }
+      fileData.fileSize = formatFileSize(file.size);
+      fileData.fileName = truncateString(file.name, 50)
+      fileData.file = file
 
-    validFiles.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        console.log(e);
-        
-        const li = $(`
-        <li class="single-image">
-          <div class="s-front">
-            <img src="${e.target.result}" alt="">
-            <div class="s-front-detail">
-              <div class="title">${file.name} <span class="badge">${file.type
-          .split("/")[1]
-          .toUpperCase()}</span></div>
-              <div class="subtitle">Original: ${Math.round(
-                file.size / 1024
-              )} KB</div>
-            </div>
-          </div>
-          <div class="cta-btn">
-            <div class="uk-button-group">
-              <button class="uk-button uk-button-primary download">Download</button>
-              <div class="uk-inline">
-                <button class="uk-button uk-button-default download-options" type="button" aria-label="Toggle Dropdown"><span uk-icon="icon: triangle-down"></span></button>
-                <div uk-dropdown="mode: click; target: !.uk-button-group;">
-                  <ul class="uk-list">
-                    <li><button class="uk-button uk-button-default uk-button-small">JPEG</button></li>
-                    <li><button class="uk-button uk-button-default uk-button-small">PNG</button></li>
-                    <li><button class="uk-button uk-button-default uk-button-small">WebP</button></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <button class="uk-icon-button uk-button-default uk-margin-small-right">
-              <img src="/assets/compression-settings.svg" alt="">
-            </button>
-          </div>
-        </li>
-      `);
-        $("#images-list").prepend(li);
-      };
-      reader.readAsDataURL(file);
-    });
+      console.log(fileData);
+      
+      updateList(fileData);
+    }
+    // return;
+    // const validFiles = Array.from(files).filter(isValidFileType);
+    // if (validFiles.length === 0) {
+    //   notyf.error("Only JPEG, JPG, and PNG files are allowed.");
+    //   return;
+    // }
+
+    // validFiles.forEach((file) => {
+    //   const reader = new FileReader();
+    //   reader.onload = function (e) {
+    //     console.log(e);
+    //   };
+    //   reader.readAsDataURL(file);
+    // });
   }
   $("#dropzone").on("click", function () {
     const fileInput = $(
-      '<input type="file" accept="image/jpeg,image/jpg,image/png" multiple>'
+      '<input type="file" accept="image/jpeg,image/jpg,image/png,image/avif,image/heic" multiple>'
     );
     fileInput.on("change", function (e) {
       const files = e.target.files;
@@ -126,18 +101,55 @@ $(document).ready(function () {
   });
 });
 
-function formatBytes(bytes, decimals = 2) {
-  if (!+bytes) return '0 Bytes'
-
-  const k = 1024
-  const dm = decimals < 0 ? 0 : decimals
-  const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+function formatFileSize(bytes, decimalPoint) {
+  if (bytes == 0) return "0 Bytes";
+  var k = 1000,
+    dm = decimalPoint || 2,
+    sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+    i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
 
+function updateList(file) {
+  const li = $(`
+    <li class="single-image">
+      <div class="s-front">
+        <img src="${file.imageBlob}" alt="">
+        <div class="s-front-detail">
+          <div class="title">${file.fileName} <span class="badge">${file.fileType}</span></div>
+          <div class="subtitle">Original: ${file.fileSize}</div>
+        </div>
+      </div>
+      <div class="cta-btn">
+        <div class="uk-button-group">
+          <button class="uk-button uk-button-primary download">Download</button>
+          <div class="uk-inline">
+            <button class="uk-button uk-button-default download-options" type="button" aria-label="Toggle Dropdown"><span uk-icon="icon: triangle-down"></span></button>
+            <div uk-dropdown="mode: click; target: !.uk-button-group;">
+              <ul class="uk-list">
+                <li><button class="uk-button uk-button-default uk-button-small">JPEG</button></li>
+                <li><button class="uk-button uk-button-default uk-button-small">PNG</button></li>
+                <li><button class="uk-button uk-button-default uk-button-small">WebP</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <button class="uk-icon-button uk-button-default uk-margin-small-right">
+          <img src="/assets/compression-settings.svg" alt="">
+        </button>
+      </div>
+    </li>
+  `);
+  $("#images-list").prepend(li);
+}
+
+function truncateString(str, num) {
+  if (str.length > num) {
+    return str.slice(0, num) + "...";
+  } else {
+    return str;
+  }
+}
 // TODO: Tip: Always revoke the URL when you're done
 // URL.revokeObjectURL(url);
 // img.onload = () => {

@@ -1,0 +1,81 @@
+@use 'variable' as *;
+body.dragging {
+  .dragging-overlay {
+    display: block;
+  }  
+  // .dropbox {
+  //   background: red;
+  // }
+}
+.dragging-overlay{
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  // background: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23fff' stroke-width='2' stroke-dasharray='10' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  background-size: calc(100% - 16px) calc(100% - 16px);
+  background-position: center;
+  background-repeat: no-repeat;
+  user-select: none;
+  pointer-events: none;
+}
+.dropbox {
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  .dropbox-inner {
+    background: #f9fafc;
+    border-radius: 8px;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23C9C9C9' stroke-width='2' stroke-dasharray='10' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .dropbox-icon img {
+    width: 100px;
+    height: auto;
+  }
+  .dropbox-text {
+    margin-top: 16px;
+    text-align: center;
+    .title {
+      font-size: 22px;
+      font-weight: 600;
+      color: $primary;
+      margin-bottom: 0;
+    }
+    .or {
+      font-size: 14px;
+      font-weight: 400;
+      color: $primary;
+      margin-bottom: 8px;
+      margin-top: 0;
+    }
+    button {
+      background: $primary;
+      border-radius: 8px;
+      height: 40px;
+      vertical-align: middle;
+      padding: 0 32px;
+      color: #fff;
+      font-weight: 400;
+      cursor: pointer;
+      font-family: "Inter", sans-serif;
+    }
+    .max-info {
+      font-size: 14px;
+      margin-top: 12px;
+      margin-bottom: 0;
+      &.-files {
+        margin-top: 0;
+      }
+    }
+  }

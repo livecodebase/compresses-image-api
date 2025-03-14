@@ -1,0 +1,44 @@
+@use 'variable' as *;
+.header-wrapper {
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    .logo-link {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      img {
+        width: 48px;
+      }
+      label {
+        margin-left: 12px;
+        color: $primary;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+    }
+  }
+  .hero-wrapper {
+    display: flex;
+    min-height: 200px;
+    padding-bottom: 40px;
+  
+    .hero-title {
+      width: 50%;
+      padding-right: 50px;
+      margin-top: 64px;
+    }
+    .hero-upload {
+      width: 50%;
+    }
+  }
+  .hero-title h1 {
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 50px;
+    color: $primary;
+    max-width: 420px;
+    span {
+      color: #2569fc;
+    }
+  }

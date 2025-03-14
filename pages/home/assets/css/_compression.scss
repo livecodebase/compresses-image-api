@@ -1,0 +1,109 @@
+@use 'variable' as *;
+.compression-settings {
+    background: #fff;
+    margin-top: 16px;
+    border-radius: 8px;
+  
+    .uk-accordion {
+      margin-bottom: 0;
+    }
+  
+    .uk-accordion-title {
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: $primary;
+  
+      &:hover {
+        color: $primary;
+      }
+    }
+    .uk-accordion-content {
+      margin-top: 0;
+      padding: 12px 16px;
+      border-top: 1px solid #efefef;
+  
+      .uk-radio:checked {
+        background-color: $primary;
+      }
+      .uk-radio {
+        width: 20px;
+        height: 20px;
+        background-size: 40px;
+        margin-right: 12px;
+      }
+      .radio-group {
+        width: 200px;
+        label {
+          font-size: 16px;
+          color: $primary;
+          margin-bottom: 12px;
+          display: block;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        br {
+          display: none;
+        }
+      }
+    }
+  }
+  .compression-quantity {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .advance-setting-wrap {
+    width: calc(100% - 200px);
+  }
+  .compression-quantity-slider {
+    .slider-wrapper {
+      position: relative;
+      border-radius: 20px;
+      input {
+        width: 100%;
+      }
+    }
+    .ui-widget-header {
+      background: #155dfc;
+      border-radius: 20px;
+    }
+    .ui-widget.ui-widget-content {
+      border: 0;
+      background: #efefef;
+      border-radius: 20px;
+    }
+    #compression-q-label {
+      top: -28px;
+      padding: 0 12px;
+      width: auto;
+      height: 20px;
+      transform: translateX(-24px);
+      background: #1e1e1e;
+      color: #fff;
+      border: 0;
+      font-size: 14px;
+      min-width: 60px;
+      text-align: center;
+  
+      &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #1e1e1e transparent transparent transparent;
+      }
+    }
+  }
+  
+  .compress-resize {
+    margin-top: 24px;
+  }
+  
+  .cil-wrap {
+    padding-bottom: 30px;
+  }
