@@ -52,7 +52,7 @@ app.use(cors());
 // Api routes
 app.use("/api/compress/", require("./routes/compress"));
 
-app.use("/", require("./pages"));
+// app.use("/", require("./pages"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () =>
