@@ -57,7 +57,7 @@
           </h1>
         </div>
         <div class="hero-upload">
-          <div class="dropbox">
+          <div class="dropbox" id="dropzone">
             <div class="dropbox-inner">
               <div class="dropbox-icon">
                 <img src="/assets/upload-icon.svg" alt="Upload Icon" />
@@ -173,7 +173,7 @@
     </section>
     <section class="container cil-wrap">
       <div class="compress-images-list">
-        <ul class="list-ul">
+        <ul class="list-ul" id="images-list">
           <li class="single-image">
             <div class="s-front">
               <img src="https://images.pexels.com/photos/17093024/pexels-photo-17093024/free-photo-of-decorated-bench-under-trees.jpeg?auto=compress&cs=tinysrgb&w=100&lazy=load" alt="">
@@ -189,9 +189,9 @@
                   <button class="uk-button uk-button-default download-options" type="button" aria-label="Toggle Dropdown"><span uk-icon="icon:  triangle-down"></span></button>
                   <div uk-dropdown="mode: click; target: !.uk-button-group;">
                     <ul class="uk-list">
-                      <li><button class="uk-button uk-button-default uk-button-small">Small button</button></li>
-                      <li><button class="uk-button uk-button-default uk-button-small">Small button</button></li>
-                      <li><button class="uk-button uk-button-default uk-button-small">Small button</button></li>
+                      <li><button class="uk-button uk-button-default uk-button-small">JPEG</button></li>
+                      <li><button class="uk-button uk-button-default uk-button-small">PNG</button></li>
+                      <li><button class="uk-button uk-button-default uk-button-small">WebP</button></li>
                     </ul>
                   </div>
               </div>
@@ -213,7 +213,9 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.23.1/dist/js/uikit-icons.min.js"></script>
 
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.0.0/rangeslider.min.js" integrity="sha512-Lazz7w1HKIe2f7fhEqp6iNrgwCxQ2DgjKxHDzEs4Wxjzf9V0GqCydiO7c37dNmdXuplGLVcq4NnzmwvMdfbsWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
-    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/script.js" type="module"></script>
   </body>
 </html>

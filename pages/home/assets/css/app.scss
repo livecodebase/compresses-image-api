@@ -1,3 +1,4 @@
+@use "sass:color";
 * {
   margin: 0;
   padding: 0;
@@ -79,6 +80,7 @@ $primary: #0f172b;
   border-radius: 8px;
   padding: 8px;
   background-color: #fff;
+  cursor: pointer;
 }
 .dropbox-inner {
   background: #f9fafc;
@@ -301,16 +303,27 @@ $primary: #0f172b;
       button {
         border-radius: 8px;
       }
-      // .uk-drop.uk-dropdown {
-      //   padding: 8px;
-      // }
+      .uk-drop.uk-dropdown {
+        padding: 8px 12px;
+        border-radius: 12px;
+        // min-width: unset;
+        .uk-list{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          li {
+            margin: 0;
+          }
+        }
+      }
       .uk-button-default {
         background-color: #E4EDFF;
         color: #2569FC;
         border: 0;
         cursor: pointer;
         &:hover {
-          background-color: darken($color: #E4EDFF, $amount: 2);
+          background-color: color.adjust(#E4EDFF, $lightness: -2%);
         }
       }
       .download {
@@ -337,14 +350,14 @@ $primary: #0f172b;
           transform: translateY(-50%);
           width: 2px;
           height: 80%;
-          background: darken($color: #2569fc, $amount: 5);
+          background: color.adjust(#2569fc, $lightness: -5%);
         }
 
         &:hover {
-          background-color: darken($color: #2569fc, $amount: 10);
+          background-color: color.adjust(#2569fc, $lightness: -10%);
 
           &::after {
-            background-color: darken($color: #2569fc, $amount: 10);
+            background-color: color.adjust(#2569fc, $lightness: -10%);
           }
         }
       }
@@ -353,7 +366,7 @@ $primary: #0f172b;
       background-color: #2569fc;
       border: 0;
       &:hover {
-        background-color: darken($color: #2569fc, $amount: 10);
+        background-color: color.adjust(#2569fc, $lightness: -10%);
       }
     }
   }
