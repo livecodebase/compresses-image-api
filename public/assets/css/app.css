@@ -307,6 +307,10 @@ body.dragging .dragging-overlay {
   background: #ECF2FF;
   color: #2569FC;
 }
+.compress-images-list .single-image .s-front .s-front-detail .badge.-jpeg {
+  background-color: #d0fae5;
+  color: #009966;
+}
 .compress-images-list .single-image .s-front .s-front-detail .badge.-png {
   background-color: #d0fae5;
   color: #009966;
@@ -318,6 +322,10 @@ body.dragging .dragging-overlay {
 .compress-images-list .single-image .s-front .s-front-detail .badge.-heic {
   background: #fffbeb;
   color: #e17100;
+}
+.compress-images-list .single-image .s-front .s-front-detail .badge.-webp {
+  background: #D0FAE5;
+  color: #009966;
 }
 .compress-images-list .single-image .s-front .s-front-detail .title {
   color: #2C2C2C;
@@ -332,6 +340,9 @@ body.dragging .dragging-overlay {
   font-weight: 400;
   color: #757575;
   font-size: 14px;
+}
+.compress-images-list .single-image .s-front .s-front-detail .subtitle .compressed-size {
+  color: #31993D;
 }
 .compress-images-list .single-image .cta-btn {
   gap: 16px;
@@ -363,6 +374,10 @@ body.dragging .dragging-overlay {
   background-color: rgb(217.8, 230.2, 255);
 }
 .compress-images-list .single-image .cta-btn .download {
+  background-color: #2569fc;
+  border: 0;
+}
+.compress-images-list .single-image .cta-btn .download-drop {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   background-color: #2569fc;

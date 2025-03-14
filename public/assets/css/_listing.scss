@@ -43,6 +43,10 @@
             background: #ECF2FF;
             color: #2569FC;
 
+            &.-jpeg {
+              background-color: #d0fae5;
+              color: #009966;
+            }
             &.-png {
               background-color: #d0fae5;
               color: #009966;
@@ -54,6 +58,10 @@
             &.-heic {
               background: #fffbeb;
               color: #e17100;
+            }
+            &.-webp {
+              background: #D0FAE5;
+              color: #009966;
             }
           }
   
@@ -71,6 +79,9 @@
               font-weight: 400;
               color: #757575;
               font-size: 14px;
+            }
+            .compressed-size {
+              color: #31993D;
             }
             // span {
             //   color: #31993D;
@@ -108,6 +119,10 @@
           }
         }
         .download {
+          background-color: #2569fc;
+          border: 0;
+        }
+        .download-drop {
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
           background-color: #2569fc;
