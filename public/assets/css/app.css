@@ -267,7 +267,7 @@ body.dragging .dragging-overlay {
 
 .compress-images-list {
   background: #fff;
-  padding: 8px 16px;
+  padding: 4px 16px;
   border-radius: 12px;
 }
 .compress-images-list .list-ul {
@@ -281,6 +281,17 @@ body.dragging .dragging-overlay {
   justify-content: space-between;
   border-bottom: 1px solid #f2f2f2;
   padding: 8px 0;
+  position: relative;
+}
+.compress-images-list .single-image.inprogress .compression-matrix {
+  display: none;
+}
+.compress-images-list .single-image .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #2569fc;
 }
 .compress-images-list .single-image:last-child {
   border-bottom: 0;
@@ -376,6 +387,23 @@ body.dragging .dragging-overlay {
 .compress-images-list .single-image .cta-btn .download {
   background-color: #2569fc;
   border: 0;
+  min-width: 140px;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.compress-images-list .single-image .cta-btn .download .uk-spinner {
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  display: none;
+}
+.compress-images-list .single-image .cta-btn .download:disabled .btn-label {
+  display: none;
+}
+.compress-images-list .single-image .cta-btn .download:disabled .uk-spinner {
+  display: block;
 }
 .compress-images-list .single-image .cta-btn .download-drop {
   border-top-right-radius: 0;

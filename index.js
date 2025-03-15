@@ -49,6 +49,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(cors());
 
+// app.use(require('express-status-monitor')());
 // Api routes
 app.use("/api/compress/", require("./routes/compress"));
 

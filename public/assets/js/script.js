@@ -1,5 +1,6 @@
 $(document).ready(function () {
   const notyf = new Notyf({ duration: 5000 });
+  const uploadedFiles = []
 
   const handle = $("#compression-q-label");
   $("#compression-quantity-slider").slider({
@@ -55,12 +56,10 @@ $(document).ready(function () {
   }
 
   function handleFiles(files) {
-    console.log(files);
-    
     $('.compress-images-list').show()
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const fileData = { };
+      const fileData = {};
       fileData.imageBlob = URL.createObjectURL(file);
       fileData.fileType = file.type.split("/")[1]?.toUpperCase();
       if (!fileData.fileType) {
@@ -69,10 +68,39 @@ $(document).ready(function () {
       fileData.fileSize = formatFileSize(file.size);
       fileData.fileName = truncateString(file.name, 50)
       fileData.file = file
-
-      console.log(fileData);
-      
+      fileData.id = `file-${uploadedFiles.length}`
+      uploadedFiles.unshift(fileData)
       updateList(fileData);
+      const formData = new FormData();
+      formData.append("file", file);
+
+      $.ajax({
+        url: "/api/compress/image",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          $(`#${fileData.id} .download`).attr('disabled', false);
+          $(`#${fileData.id}`).removeClass('inprogress')
+          $(`#${fileData.id} .compressed-size`).text(`${response.minifiedSize} ( -${response.compressionRatio} )`)
+          
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          notyf.error("Failed to compress the file.");
+          console.error("Error: ", textStatus, errorThrown);
+        },
+        // xhr: function () {
+        //   const xhr = new window.XMLHttpRequest();
+        //   xhr.upload.addEventListener("progress", function (evt) {
+        // if (evt.lengthComputable) {
+        //   const percentComplete = (evt.loaded / evt.total) * 100;
+        //   $(`#${fileData.id} .progress`).css("width", percentComplete + "%");
+        // }
+        //   }, false);
+        //   return xhr;
+        // }
+      });
     }
     // return;
     // const validFiles = Array.from(files).filter(isValidFileType);
@@ -112,34 +140,29 @@ function formatFileSize(bytes, decimalPoint) {
 
 function updateList(file) {
   const li = $(`
-    <li class="single-image">
+    <li id="${file.id}" class="single-image inprogress">
       <div class="s-front">
         <img src="${file.imageBlob}" alt="">
         <div class="s-front-detail">
-          <div class="title">${file.fileName} <span class="badge">${file.fileType}</span></div>
-          <div class="subtitle">Original: ${file.fileSize}</div>
+          <div class="title">${file.fileName}</div>
+          <div class="subtitle">
+            <span class="badge -${file.fileType?.toLowerCase()}">${file.fileType}</span>
+            <span class="original-size">Original: ${file.fileSize}  <span class="compression-matrix">|  Compressed: <span class="compressed-size"></span></span></span>
+          </div>
         </div>
       </div>
       <div class="cta-btn">
         <div class="uk-button-group">
-          <button class="uk-button uk-button-primary download">Download</button>
-          <div class="uk-inline">
-            <button class="uk-button uk-button-default download-options" type="button" aria-label="Toggle Dropdown"><span uk-icon="icon: triangle-down"></span></button>
-            <div uk-dropdown="mode: click; target: !.uk-button-group;">
-              <ul class="uk-list">
-                <li><button class="uk-button uk-button-default uk-button-small">JPEG</button></li>
-                <li><button class="uk-button uk-button-default uk-button-small">PNG</button></li>
-                <li><button class="uk-button uk-button-default uk-button-small">WebP</button></li>
-              </ul>
-            </div>
-          </div>
+          <button class="uk-button uk-button-primary download" disabled>
+            <span class="btn-label">Download</span>
+            <span uk-spinner></span>
+          </button>
         </div>
-        <button class="uk-icon-button uk-button-default uk-margin-small-right">
-          <img src="/assets/compression-settings.svg" alt="">
-        </button>
       </div>
     </li>
   `);
+  // <div class="progress" style="width: 0%;"></div>
+
   $("#images-list").prepend(li);
 }
 

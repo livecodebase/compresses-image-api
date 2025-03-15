@@ -3,7 +3,7 @@
 
 .compress-images-list {
     background: #fff;
-    padding: 8px 16px;
+    padding: 4px 16px;
     border-radius: 12px;
   
     .list-ul {
@@ -17,7 +17,22 @@
       justify-content: space-between;
       border-bottom: 1px solid #f2f2f2;
       padding: 8px 0;
-      
+      position: relative;
+
+      &.inprogress {
+        .compression-matrix {
+          display: none;
+        }
+      }
+
+      .progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: #2569fc;
+      }
+    
       &:last-child {
         border-bottom: 0;
       }
@@ -121,6 +136,25 @@
         .download {
           background-color: #2569fc;
           border: 0;
+          min-width: 140px;
+          min-height: 38px;
+          align-items: center;
+          justify-content: center;
+          display: flex;
+          .uk-spinner {
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            display: none;
+          }
+          &:disabled {
+            .btn-label {
+              display: none;
+            }
+            .uk-spinner {
+              display: block;
+            }
+          }
         }
         .download-drop {
           border-top-right-radius: 0;

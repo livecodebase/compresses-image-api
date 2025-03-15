@@ -24,11 +24,19 @@ const compressImage = async ({
   await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
   await compressWithTool('jpegoptim', [`--size=${smartQuality}%`, '--strip-all', outputPath]);
 
+  const originalSize = filesize;
+  const minifiedSize = (await fs.stat(outputPath)).size;
+  const minifiedSizeFormatted = formatFileSize((await fs.stat(outputPath)).size);
+  const compressionRatio = ((originalSize - minifiedSize) / originalSize) * 100;
+
   return {
     minified: `http://${host}/${filename}-min${extention}`,
+    originalSize,
+    minifiedSize: minifiedSizeFormatted,
+    compressionRatio: compressionRatio.toFixed(2) + '%',
   };
 };
-
+ 
 const compressWithTool = async (tool, args) => {
   try {
     await execa(tool, args);
@@ -71,6 +79,15 @@ async function analyzeImageStats(imagePath) {
     const quality = baseQuality - Math.floor(weight * 20); // range 70–90
     
     return Math.max(65, Math.min(quality, baseQuality));
+  }
+
+  function formatFileSize(bytes, decimalPoint) {
+    if (bytes == 0) return "0 Bytes";
+    var k = 1000,
+      dm = decimalPoint || 2,
+      sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 
 module.exports = { compressImage };
