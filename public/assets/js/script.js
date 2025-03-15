@@ -87,7 +87,7 @@ $(document).ready(function () {
           
         },
         error: function (jqXHR, textStatus, errorThrown) {
-          notyf.error("Failed to compress the file.");
+          notyf.error("Technical issue Please try after some time.");
           console.error("Error: ", textStatus, errorThrown);
         },
         // xhr: function () {

@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const multerUploads = require("../../middleware/multer");
 
-const funcs = require("../../methods/imageresize");
+// const funcs = require("../../methods/imageresize");
 const { compressImage } = require("../../methods/compressImage")
 const fs = require("fs");
 const path = require("path");
@@ -17,16 +17,17 @@ router.post("/image", multerUploads, async (req, res) => {
   }
   let imageData = {}
   imageData.filepath = req.file.path
-  imageData.filename = req.file.filename
+  imageData.filename = req.file.filename.split('.')?.[0]
   imageData.extention = path.extname(req.file.filename).toLowerCase()
   imageData.filesize = req.file.size
   imageData.host = req.headers.host
   imageData.mimetype = req.file.mimetype || "image/jpeg"
+  imageData.origin = req.headers.origin
   // const modifiedData = await funcs.universalResizer(imageData);
   const modifiedData = await compressImage(imageData)
-  // fs.unlink(req.file.path, function (err) {
-  //   if (err) throw err;
-  // });
+  fs.unlink(req.file.path, function (err) {
+    if (err) throw err;
+  });
   res.send(modifiedData);
 });
 

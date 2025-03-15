@@ -1,6 +1,7 @@
 const fs = require("fs").promises;
-const sharp = require("sharp");
-const heicConvert = require("heic-convert");
+const fileFs = require('fs');
+// const sharp = require("sharp");
+// const heicConvert = require("heic-convert");
 const path = require("path");
 const { execa } = require('execa');
 const { Jimp } = require('jimp');
@@ -12,11 +13,17 @@ const compressImage = async ({
   host,
   mimetype,
   filesize,
+  origin
 }) => {
   const outputPath = path.join(
     __dirname,
-    `../uploads/${filename}-min${extention}`
+    `../public/uploads/${filename}-min${extention}`
   );
+
+  const outputFolder = path.join(__dirname, `../public/uploads`)
+  if (!fileFs.existsSync(outputFolder)) {
+    fileFs.mkdirSync(outputFolder, { recursive: true });
+  }
 
   const stats = await analyzeImageStats(filepath);
   const smartQuality = getSmartQuality(stats);
@@ -30,7 +37,7 @@ const compressImage = async ({
   const compressionRatio = ((originalSize - minifiedSize) / originalSize) * 100;
 
   return {
-    minified: `http://${host}/${filename}-min${extention}`,
+    minified: `${origin}/uploads/${filename}-min${extention}`,
     originalSize,
     minifiedSize: minifiedSizeFormatted,
     compressionRatio: compressionRatio.toFixed(2) + '%',
