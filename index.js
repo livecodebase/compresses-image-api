@@ -1,5 +1,7 @@
+require("dotenv").config();
 const express = require("express");
-const port = 4000;
+const port = process.env.PORT || 4000;
+const allowedOrigin = process.env.ALLOWED_ORIGIN || "https://compresso.livecodebase.com";
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -8,8 +10,7 @@ const fs = require("fs/promises");
 const path = require("path");
 const cron = require("node-cron");
 
-// cron.schedule('0 * * * *', () => {
-cron.schedule("* * * * *", () => {
+cron.schedule("0 * * * *", () => {
   const directory = path.join(__dirname, "public/uploads");
   const now = Date.now();
   fs.readdir(directory).then(async (files) => {
@@ -20,9 +21,9 @@ cron.schedule("* * * * *", () => {
       if (fileAge > 3600) {
         try {
           await fs.unlink(filePath);
-          console.log(`Deleted old file: ${filePath}`);
+          // console.log(`Deleted old file: ${filePath}`);
         } catch (err) {
-          console.error(`Failed to delete file: ${filePath}`, err);
+          // console.error(`Failed to delete file: ${filePath}`, err);
         }
       }
     }
@@ -42,14 +43,11 @@ cron.schedule("* * * * *", () => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
-// app.use(cors());
-
-const allowedOrigin = "https://compresso.livecodebase.com";
-// const allowedOrigin = "http://localhost:4000";
 
 app.use(
   cors({
     origin: allowedOrigin,
+    // origin: false
     // credentials: true, // only if you're using cookies or auth headers
   })
 );

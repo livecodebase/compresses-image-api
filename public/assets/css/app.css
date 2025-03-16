@@ -286,6 +286,12 @@ body.dragging .dragging-overlay {
 .compress-images-list .single-image.inprogress .compression-matrix {
   display: none;
 }
+.compress-images-list .single-image.inprogress .s-front img {
+  display: none;
+}
+.compress-images-list .single-image.inprogress .s-front .loading-img {
+  display: flex;
+}
 .compress-images-list .single-image .progress {
   position: absolute;
   bottom: 0;
@@ -305,6 +311,15 @@ body.dragging .dragging-overlay {
   height: 40px;
   object-fit: cover;
   object-position: center;
+  border-radius: 8px;
+}
+.compress-images-list .single-image .s-front .loading-img {
+  width: 40px;
+  height: 40px;
+  background: #f5f5f5;
+  display: none;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
 }
 .compress-images-list .single-image .s-front .s-front-detail {
@@ -392,6 +407,7 @@ body.dragging .dragging-overlay {
   align-items: center;
   justify-content: center;
   display: flex;
+  border-radius: 8px;
 }
 .compress-images-list .single-image .cta-btn .download .uk-spinner {
   color: #fff;
@@ -399,10 +415,14 @@ body.dragging .dragging-overlay {
   height: 24px;
   display: none;
 }
-.compress-images-list .single-image .cta-btn .download:disabled .btn-label {
+.compress-images-list .single-image .cta-btn .download.disabled {
+  user-select: none;
+  pointer-events: none;
+}
+.compress-images-list .single-image .cta-btn .download.disabled .btn-label {
   display: none;
 }
-.compress-images-list .single-image .cta-btn .download:disabled .uk-spinner {
+.compress-images-list .single-image .cta-btn .download.disabled .uk-spinner {
   display: block;
 }
 .compress-images-list .single-image .cta-btn .download-drop {

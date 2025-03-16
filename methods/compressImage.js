@@ -1,7 +1,8 @@
 const fs = require("fs").promises;
 const fileFs = require('fs');
-// const sharp = require("sharp");
-// const heicConvert = require("heic-convert");
+const sharp = require("sharp");
+const heicConvert = require("heic-convert");
+
 const path = require("path");
 const { execa } = require('execa');
 const { Jimp } = require('jimp');
@@ -15,33 +16,43 @@ const compressImage = async ({
   filesize,
   origin
 }) => {
-  const outputPath = path.join(
-    __dirname,
-    `../public/uploads/${filename}-min${extention}`
-  );
+  try {
+    const outputPath = path.join(
+      __dirname,
+      `../public/uploads/${filename}-min${extention}`
+    );
+  
+    const outputFolder = path.join(__dirname, `../public/uploads`)
+    if (!fileFs.existsSync(outputFolder)) {
+      fileFs.mkdirSync(outputFolder, { recursive: true });
+    }
+  
+    const stats = await analyzeImageStats(filepath);
+    const smartQuality = getSmartQuality(stats);
 
-  const outputFolder = path.join(__dirname, `../public/uploads`)
-  if (!fileFs.existsSync(outputFolder)) {
-    fileFs.mkdirSync(outputFolder, { recursive: true });
+    const imageBuffer = await fs.readFile(filepath);
+    const sharpImage = sharp(imageBuffer);
+    const checkJpegQuality = await comprsssionQualityEstimate(sharpImage);
+    console.log('checkJpegQuality', checkJpegQuality);
+  
+    await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
+    await compressWithTool('jpegoptim', [`--size=${smartQuality}%`, '--strip-all', outputPath]);
+  
+    const originalSize = filesize;
+    const minifiedSize = (await fs.stat(outputPath)).size;
+    const minifiedSizeFormatted = formatFileSize((await fs.stat(outputPath)).size);
+    const compressionRatio = ((originalSize - minifiedSize) / originalSize) * 100;
+  
+    return {
+      minified: `${origin}/uploads/${filename}-min${extention}`,
+      originalSize,
+      minifiedSize: minifiedSizeFormatted,
+      compressionRatio: compressionRatio.toFixed(2) + '%',
+    }; 
+  } catch (error) {
+    console.error("Error compressing image:", error);
+    throw new Error("Failed to compress image");
   }
-
-  const stats = await analyzeImageStats(filepath);
-  const smartQuality = getSmartQuality(stats);
-
-  await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
-  await compressWithTool('jpegoptim', [`--size=${smartQuality}%`, '--strip-all', outputPath]);
-
-  const originalSize = filesize;
-  const minifiedSize = (await fs.stat(outputPath)).size;
-  const minifiedSizeFormatted = formatFileSize((await fs.stat(outputPath)).size);
-  const compressionRatio = ((originalSize - minifiedSize) / originalSize) * 100;
-
-  return {
-    minified: `${origin}/uploads/${filename}-min${extention}`,
-    originalSize,
-    minifiedSize: minifiedSizeFormatted,
-    compressionRatio: compressionRatio.toFixed(2) + '%',
-  };
 };
  
 const compressWithTool = async (tool, args) => {
@@ -49,6 +60,7 @@ const compressWithTool = async (tool, args) => {
     await execa(tool, args);
   } catch (err) {
     console.error(`[ERROR] ${tool}:`, err.stderr || err.message);
+    throw new Error(`Failed to compress image with ${tool}`);
   }
 };
 
@@ -85,6 +97,9 @@ async function analyzeImageStats(imagePath) {
     const weight = (avgBrightness * 0.6 + avgSaturation * 0.4) / 255;
     const quality = baseQuality - Math.floor(weight * 20); // range 70–90
     
+    console.log('getSmartQuality base:', quality);
+    console.log('getSmartQuality math:', Math.max(65, Math.min(quality, baseQuality)));
+    
     return Math.max(65, Math.min(quality, baseQuality));
   }
 
@@ -96,5 +111,34 @@ async function analyzeImageStats(imagePath) {
       i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
+
+  const comprsssionQualityEstimate = async (image) => {
+    const data = await image
+      .clone()
+      .resize(10, 10)
+      .greyscale()
+      .raw()
+      .toBuffer({ resolveWithObject: false });
+  
+    const avgBrightness = data.reduce((sum, val) => sum + val, 0) / data.length;
+    // console.log("avgBrightness", avgBrightness);
+    
+    // Determine quality based on brightness
+    let quality;
+    if (avgBrightness > 220) {
+      quality = 20; // Ultra Low
+    } else if (avgBrightness > 180) {
+      quality = 40; // Low
+    } else if (avgBrightness > 120) {
+      quality = 60; // Normal
+    } else if (avgBrightness > 60) {
+      quality = 70; // High
+    } else if (avgBrightness > 56) {
+      quality = 75; // High
+    } else {
+      quality = 80; // Very High
+    }
+    return quality;
+  };
 
 module.exports = { compressImage };
