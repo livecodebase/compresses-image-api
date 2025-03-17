@@ -32,11 +32,22 @@ const compressImage = async ({
 
     const imageBuffer = await fs.readFile(filepath);
     const sharpImage = sharp(imageBuffer);
-    const checkJpegQuality = await comprsssionQualityEstimate(sharpImage);
-    console.log('checkJpegQuality', checkJpegQuality);
+    const {avgQuality, avgBrightness} = await comprsssionQualityEstimate(sharpImage);
+    console.log('avgQuality', avgQuality);
+
+    let compressQuality = avgBrightness > 120 ? Math.min(avgQuality, smartQuality) : Math.max(avgQuality, smartQuality)
+    console.log('avgBrightness', avgBrightness);
+    const qualityDrop = estimateQualityDrop(filesize);
+    console.log('compressQuality', compressQuality);
+    compressQuality = Math.max(10, avgQuality - qualityDrop);
   
-    await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
-    await compressWithTool('jpegoptim', [`--size=${smartQuality}%`, '--strip-all', outputPath]);
+    // await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
+    // await compressWithTool('jpegoptim', [`--size=${60}%`, '--strip-all', outputPath]);
+    await compressWithTool('mozjpeg', [`-quality`, compressQuality, '-outfile', outputPath, filepath]);
+
+    // execFile(mozjpeg, ['-outfile', outputPath, filepath], err => {
+    //   console.log('Image minified!');
+    // });
   
     const originalSize = filesize;
     const minifiedSize = (await fs.stat(outputPath)).size;
@@ -124,21 +135,40 @@ async function analyzeImageStats(imagePath) {
     // console.log("avgBrightness", avgBrightness);
     
     // Determine quality based on brightness
-    let quality;
+    let avgQuality;
     if (avgBrightness > 220) {
-      quality = 20; // Ultra Low
+      avgQuality = 20; // Ultra Low
     } else if (avgBrightness > 180) {
-      quality = 40; // Low
+      avgQuality = 40; // Low
     } else if (avgBrightness > 120) {
-      quality = 60; // Normal
+      avgQuality = 60; // Normal
     } else if (avgBrightness > 60) {
-      quality = 70; // High
+      avgQuality = 70; // High
     } else if (avgBrightness > 56) {
-      quality = 75; // High
+      avgQuality = 75; // High
     } else {
-      quality = 80; // Very High
+      avgQuality = 80; // Very High
     }
-    return quality;
+    return {avgQuality, avgBrightness};
   };
+
+  function estimateQualityDrop(filesize) {
+    // Define thresholds and corresponding quality drops
+    const thresholds = [
+      { size: 5 * 1024 * 1024, drop: 10 }, // > 5MB
+      { size: 2 * 1024 * 1024, drop: 5 },  // > 2MB
+      { size: 1 * 1024 * 1024, drop: 3 },  // > 1MB
+      { size: 500 * 1024, drop: 2 },       // > 500KB
+    ];
+
+    // Determine the quality drop based on file size
+    for (const threshold of thresholds) {
+      if (filesize > threshold.size) {
+        return threshold.drop;
+      }
+    }
+    // Default drop for smaller files
+    return 0;
+  }
 
 module.exports = { compressImage };
