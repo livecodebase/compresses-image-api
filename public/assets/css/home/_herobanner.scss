@@ -1,4 +1,4 @@
-@use 'variable' as *;
+@use '../variable' as *;
 .header-wrapper {
     padding: 16px 0;
     display: flex;
@@ -32,13 +32,22 @@
       width: 50%;
     }
   }
-  .hero-title h1 {
-    font-weight: 700;
-    font-size: 42px;
-    line-height: 50px;
-    color: $primary;
-    max-width: 420px;
-    span {
-      color: #2569fc;
+  .hero-title {
+    .main-heading {
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 120%;
+      margin-bottom: 16px;
+      color: $primary;
+      span {
+        color: #2569fc;
+      }
+    }
+    .main-subheading {
+      margin-top: 0;
+      color: #616161;
+      font-weight: 500;
+      font-size: 24px;
+      max-width: 450px;
     }
   }

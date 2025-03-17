@@ -4,7 +4,7 @@ const { nanoid } = require('nanoid');
 const fs = require('fs');
 
 // Set file size limit (e.g., 5MB)
-const FILE_SIZE_LIMIT = 5 * 1024 * 1024; // 5MB
+const FILE_SIZE_LIMIT = 100 * 1024 * 1024; // 5MB
 
 // Allowed file types
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];

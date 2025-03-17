@@ -1,5 +1,6 @@
 @use 'variable' as *;
-@use 'herobanner';
-@use 'dropbox';
-@use 'compression';
-@use 'listing';
+@use 'home/herobanner';
+@use 'home/dropbox';
+@use 'home/compression';
+@use 'home/listing';
+@use 'home/home';

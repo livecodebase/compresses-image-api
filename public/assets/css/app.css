@@ -35,6 +35,12 @@ button {
   padding: 0 40px;
 }
 
+.section-heading {
+  text-align: center;
+  font-size: 36px;
+  color: #0f172b;
+}
+
 .header-wrapper {
   padding: 16px 0;
   display: flex;
@@ -69,15 +75,22 @@ button {
   width: 50%;
 }
 
-.hero-title h1 {
+.hero-title .main-heading {
   font-weight: 700;
-  font-size: 42px;
-  line-height: 50px;
+  font-size: 48px;
+  line-height: 120%;
+  margin-bottom: 16px;
   color: #0f172b;
-  max-width: 420px;
 }
-.hero-title h1 span {
+.hero-title .main-heading span {
   color: #2569fc;
+}
+.hero-title .main-subheading {
+  margin-top: 0;
+  color: #616161;
+  font-weight: 500;
+  font-size: 24px;
+  max-width: 450px;
 }
 
 body.dragging .dragging-overlay {
@@ -463,6 +476,39 @@ body.dragging .dragging-overlay {
 }
 .compress-images-list .single-image .uk-button-primary:hover {
   background-color: rgb(3.2307692308, 76.4615384615, 234.7692307692);
+}
+
+.why-us {
+  padding-bottom: 40px;
+}
+.why-us .section-heading {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.why-us .why-cards {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  gap: 40px;
+}
+.why-us .single-card {
+  background-color: #fff;
+  padding: 40px 24px 24px;
+  border-radius: 24px;
+}
+.why-us .single-card img {
+  width: 128px;
+}
+.why-us .single-card .card-title {
+  font-size: 24px;
+  color: #0f172b;
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+.why-us .single-card .card-desc {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=app.css.map */

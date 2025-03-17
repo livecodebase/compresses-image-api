@@ -39,15 +39,23 @@ const compressImage = async ({
     // console.log('avgBrightness', avgBrightness);
     const qualityDrop = estimateQualityDrop(filesize);
     // console.log('compressQuality', compressQuality);
+    // let compressQualityNew = Math.max(10, compressQuality - qualityDrop);
     compressQuality = Math.max(10, avgQuality - qualityDrop);
-  
-    // await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
-    // await compressWithTool('jpegoptim', [`--size=${60}%`, '--strip-all', outputPath]);
-    await compressWithTool('mozjpeg', [`-quality`, compressQuality, '-outfile', outputPath, filepath]);
 
-    // execFile(mozjpeg, ['-outfile', outputPath, filepath], err => {
-    //   console.log('Image minified!');
-    // });
+    // console.log('smartQuality', smartQuality);
+    // console.log('avgQuality', avgQuality);
+    // console.log('compressQuality', compressQuality);
+    // console.log('compressQualityNew', compressQualityNew);
+    // console.log('----');
+  
+    if (mimetype === 'image/jpeg' || mimetype === 'image/jpg') {
+      // await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
+      // await compressWithTool('jpegoptim', [`--size=${60}%`, '--strip-all', outputPath]);
+      await compressWithTool('mozjpeg', [`-quality`, compressQuality, '-outfile', outputPath, filepath]);
+    } else if(mimetype === 'image/png') {
+      await compressWithTool('pngquant', [`--quality=40-80`, filepath, '-o', outputPath]);
+      // await compressWithTool('pngquant', [`-quality`, compressQuality, '-outfile', outputPath, filepath]);
+    }
   
     const originalSize = filesize;
     const minifiedSize = (await fs.stat(outputPath)).size;
