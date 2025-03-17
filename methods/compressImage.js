@@ -47,6 +47,19 @@ const compressImage = async ({
     // console.log('compressQuality', compressQuality);
     // console.log('compressQualityNew', compressQualityNew);
     // console.log('----');
+
+    // const outputPathJpg = path.join(
+    //   __dirname,
+    //   `../public/uploads/${filename}-min.jpg`
+    // );
+    // const outputPathJpgMin = path.join(
+    //   __dirname,
+    //   `../public/uploads/${filename}-min2.jpg`
+    // );
+    // // magick input.jpg output.png
+    // await compressWithTool('magick', [filepath, outputPathJpg]);
+    // await compressWithTool('mozjpeg', [`-quality`, compressQuality, '-outfile', outputPathJpgMin, outputPathJpg]);
+
   
     if (mimetype === 'image/jpeg' || mimetype === 'image/jpg') {
       // await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
