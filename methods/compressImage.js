@@ -33,12 +33,12 @@ const compressImage = async ({
     const imageBuffer = await fs.readFile(filepath);
     const sharpImage = sharp(imageBuffer);
     const {avgQuality, avgBrightness} = await comprsssionQualityEstimate(sharpImage);
-    console.log('avgQuality', avgQuality);
+    // console.log('avgQuality', avgQuality);
 
     let compressQuality = avgBrightness > 120 ? Math.min(avgQuality, smartQuality) : Math.max(avgQuality, smartQuality)
-    console.log('avgBrightness', avgBrightness);
+    // console.log('avgBrightness', avgBrightness);
     const qualityDrop = estimateQualityDrop(filesize);
-    console.log('compressQuality', compressQuality);
+    // console.log('compressQuality', compressQuality);
     compressQuality = Math.max(10, avgQuality - qualityDrop);
   
     // await compressWithTool('jpegtran', ['-copy', 'none', '-optimize', '-progressive', '-outfile', outputPath, filepath]);
@@ -108,8 +108,8 @@ async function analyzeImageStats(imagePath) {
     const weight = (avgBrightness * 0.6 + avgSaturation * 0.4) / 255;
     const quality = baseQuality - Math.floor(weight * 20); // range 70–90
     
-    console.log('getSmartQuality base:', quality);
-    console.log('getSmartQuality math:', Math.max(65, Math.min(quality, baseQuality)));
+    // console.log('getSmartQuality base:', quality);
+    // console.log('getSmartQuality math:', Math.max(65, Math.min(quality, baseQuality)));
     
     return Math.max(65, Math.min(quality, baseQuality));
   }
