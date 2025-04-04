@@ -4,7 +4,6 @@ const multerUploads = require("../../middleware/multer");
 const { compressImage } = require("../../methods/compressImage");
 const fs = require("fs");
 const path = require("path");
-const { log } = require("console");
 
 router.post("/image", multerUploads, async (req, res) => {
   try {
@@ -35,6 +34,9 @@ router.post("/image", multerUploads, async (req, res) => {
       }
     });
 
+    if (!modifiedData) {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
     res.json(modifiedData);
   } catch (error) {
     console.error("Error processing image upload:", error);
